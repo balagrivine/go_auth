@@ -10,7 +10,7 @@ Ensure you have Goland installed on your system. If not, you can download and in
 Clone the go_auth repository using the command below to get started:
 
 ```bash
-git clone https://github.com/balagrivine/go_auth/git
+git clone https://github.com/balagrivine/go_auth.git
 ```
 
 ## Database Setup
