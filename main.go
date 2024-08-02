@@ -8,13 +8,13 @@ import (
 	
 	"github.com/balagrivine/go_auth/config"
 	"github.com/balagrivine/go_auth/handler"
-	"github.com/joho/dotenv"
+	"github.com/joho/godotenv"
 )
 
 func main() {
 
 	// Load environmental variables
-	dotenv.Load(".env")
+	godotenv.Load(".env")
 
 	// Initialize the ocnfiguration
 	if apiCfg, err := congif.InitConfig(); err != nil {
