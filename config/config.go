@@ -4,7 +4,7 @@ import (
 	"database/sql"
 	"os"
 
-	"github.com/balagrivine/go_auth/internal/database"
+	"github.com/balagrivine/go_auth/internal/database/v1"
 	_"github.com/lib/pq"
 )
 
