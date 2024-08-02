@@ -15,7 +15,7 @@ type APIConfig struct {
 // Initializes a database connection
 func InitConfig() (*APIConfig, error) {
 
-	dbURL = os.Getenv("DB_URL")
+	dbURL := os.Getenv("DB_URL")
 
 	// Make a database connection
 	conn, err := sql.Open("postgres", dbURL)

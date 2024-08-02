@@ -2,6 +2,28 @@ module github.com/balagrivine/go_auth
 
 go 1.22.5
 
-require github.com/joho/dotenv v2.2.0+incompatible // indirect
+require (
+	github.com/balagrivine/go_auth/config v0.0.0-20240802174243-9ebe12a9b761
+	github.com/balagrivine/go_auth/handler v0.0.0-00010101000000-000000000000
+	github.com/joho/godotenv v1.5.1
+)
+
+require (
+	github.com/balagrivine/go_auth/internal/database v0.0.0-20240802181418-0d4ed37e6b93 // indirect
+	github.com/gabriel-vasile/mimetype v1.4.3 // indirect
+	github.com/go-playground/locales v0.14.1 // indirect
+	github.com/go-playground/universal-translator v0.18.1 // indirect
+	github.com/go-playground/validator/v10 v10.22.0 // indirect
+	github.com/leodido/go-urn v1.4.0 // indirect
+	github.com/lib/pq v1.10.9 // indirect
+	golang.org/x/crypto v0.25.0 // indirect
+	golang.org/x/net v0.21.0 // indirect
+	golang.org/x/sys v0.22.0 // indirect
+	golang.org/x/text v0.16.0 // indirect
+)
 
 replace github.com/balagrivine/go_auth/handler => ./handler
+
+replace github.com/balagrivine/go_auth => ./config
+
+replace github.com/balagrivine/go_auth/config => ./config

@@ -2,6 +2,7 @@ package handler
 
 import (
 	"net/http"
+	"database/sql"
 	"encoding/json"
 	"time"
 	"fmt"
@@ -21,13 +22,13 @@ type CreateUser struct {
 
 // Handler function to create a new user
 func HandleCreateUser(apiCfg *config.APIConfig) http.HandlerFunc {
-	return func(w http.ResponseWriter r *http.Request) {
-		decoder := json.NewDecoder(r.body)
+	return func(w http.ResponseWriter, r *http.Request) {
+		decoder := json.NewDecoder(r.Body)
 		var param CreateUser
 
 		// Decode the request body into the param variable
 		if err := decoder.Decode(&param); err != nil {
-			http.Error(w, fmt.Sprintf("Error parsing JSON %s", err) http.StatusBadRequest)
+			http.Error(w, fmt.Sprintf("Error parsing JSON %s", err), http.StatusBadRequest)
 			return
 		}
 
@@ -35,21 +36,21 @@ func HandleCreateUser(apiCfg *config.APIConfig) http.HandlerFunc {
 		validate := validator.New(validator.WithRequiredStructEnabled())
 
 		// Validate the decoded user data
-		if err = validate.Struct(param); err != nil {
-			http.Error(w, fmt.Sprintf("Validation failed %s", err) http.StatusBadRequest)
+		if err := validate.Struct(param); err != nil {
+			http.Error(w, fmt.Sprintf("Validation failed %s", err), http.StatusBadRequest)
 			return
 		}
 
 		pass, err := HashPassword(param.Password)
 		if err != nil {
-			http.Error(w, fmt.Sprintf("error hashing password: %s", err) http.StatusInternalServerError)
+			http.Error(w, fmt.Sprintf("error hashing password: %s", err), http.StatusInternalServerError)
 			return
 		}
 
 		currentTime := time.Now().UTC()
-		nullTime = sql.NullTime {
+		nullTime := sql.NullTime{
 			Time: currentTime,
-			valid: true,
+			Valid: true,
 		}
 
 		user, err := apiCfg.DB.CreateUser(r.Context(), database.CreateUserParams{
@@ -60,10 +61,10 @@ func HandleCreateUser(apiCfg *config.APIConfig) http.HandlerFunc {
 			LastName:   param.LastName,
 			CreatedAt:  nullTime,
 			UpdatedAt:  nullTime,
-			Verified:   sql.NullBool{Bool: false, Valid: true}
+			Verified:   sql.NullBool{Bool: false, Valid: true},
 		})
 		if err != nil {
-			http.Error(w, fmt.Sprintf("Couldn't create user: %s", err) http.StatusBadRequest)
+			http.Error(w, fmt.Sprintf("Couldn't create user: %s", err), http.StatusBadRequest)
 		}
 
 		RespondWithJSON(w, 201, user)

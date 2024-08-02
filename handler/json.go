@@ -2,7 +2,8 @@ package handler
 
 import (
 	"net/http"
-	"json/encoding"
+	"encoding/json"
+	"log"
 )
 
 // RespondWithJSON: sends a JSON response with given HTTP status code and payload
@@ -10,9 +11,9 @@ import (
 // statusCode: HTTP status code to set ofr the response
 // payload: data to be marshalled into JSON and sent as the response body
 
-func RespondWithJSON(w http.ResponseWriter, statusCode int payload interface{}) {
+func RespondWithJSON(w http.ResponseWriter, statusCode int, payload interface{}) {
 
-	data, err := json.MarshalIndent(payload, "", " ")
+	data, err := json.Marshal(payload)
 
 	if err != nil {
 		log.Printf("Failed to marshal json: %v", payload)

@@ -1,10 +1,8 @@
 package main
 
 import (
-	"fmt"
 	"log"
-	"os"
-	"time"
+	"net/http"
 	
 	"github.com/balagrivine/go_auth/config"
 	"github.com/balagrivine/go_auth/handler"
@@ -17,7 +15,8 @@ func main() {
 	godotenv.Load(".env")
 
 	// Initialize the ocnfiguration
-	if apiCfg, err := congif.InitConfig(); err != nil {
+	apiCfg, err := config.InitConfig()
+	if err != nil {
 		log.Fatal("Couldn't initialize config: ", err)
 	}
 
