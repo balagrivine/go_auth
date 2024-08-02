@@ -15,8 +15,8 @@ type CreateUser struct {
 	Username string  `json:"username" validate:"required"`
 	Email string     `json:"email" validate:"required, email"`
 	Password string  `json:"password" validate:"required"`
-	Firstname string `json:"first_name" validate:"required"`
-	Lastname string  `json:"last_name" validate:"required"`
+	FirstName string `json:"first_name" validate:"required"`
+	LastName string  `json:"last_name" validate:"required"`
 }
 
 // Handler function to create a new user
@@ -56,8 +56,8 @@ func HandleCreateUser(apiCfg *config.APIConfig) http.HandlerFunc {
 			Username:   param.Username,
 			Email:      param.Email,
 			Password:   pass,
-			Firstname:  param.Firstname,
-			Lastname:   param.Lastname,
+			FirstName:  param.FirstName,
+			LastName:   param.LastName,
 			CreatedAt:  nullTime,
 			UpdatedAt:  nullTime,
 			Verified:   sql.NullBool{Bool: false, Valid: true}
