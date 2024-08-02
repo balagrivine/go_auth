@@ -25,5 +25,5 @@ func main() {
 
 	mux.HandleFunc("POST /api/v1/users", handler.HandleCreateUser(apiCfg))
 
-	log.Fatal(http.ListenAndServe(":3000", mux))
+	log.Fatal(http.ListenAndServe(":8000", mux))
 }
