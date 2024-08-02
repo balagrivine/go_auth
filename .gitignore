@@ -1,0 +1,4 @@
+# Files to be ignored by github
+
+# File containing environmental variables
+.env
