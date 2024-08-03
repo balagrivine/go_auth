@@ -20,6 +20,11 @@ type CreateUser struct {
 	LastName string  `json:"last_name" validate:"required"`
 }
 
+// Handler function to check server health
+func HandleHealth(w http.ResponseWriter, r *http.Request) {
+	RespondWithJSON(w, 200, {"message": "StatusOK"})
+}
+
 // Handler function to create a new user
 func HandleCreateUser(apiCfg *config.APIConfig) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
