@@ -22,8 +22,8 @@ func main() {
 
 	mux := http.NewServeMux()
 
-	mux.HandleFunc("POST /api/v1/users/register", handler.HandleCreateUser(apiCfg))
 	mux.HandleFunc("GET /api/v1/health", handler.HandleHealth)
+	mux.HandleFunc("POST /api/v1/users/register", handler.HandleCreateUser(apiCfg))
 
 	log.Fatal(http.ListenAndServe(":8080", mux))
 }
