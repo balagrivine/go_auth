@@ -2,14 +2,10 @@ package handler
 
 import (
 	"net/http"
-	"fmt"
+	// "fmt"
 	"encoding/json"
 )
 
-func HandleHealth() HandlerFunc{
-	return func(w http.ResponseWriter, r *http.Request) {
-
-		response := map[string]string{"message": "Status OK"}
-		json.NewEncoder(w).Encode(response)
-	}
+func HandleHealth(w http.ResponseWriter, r *http.Request) {
+	RespondWithJSON(w, 200, {"message": "StatusOK"})
 }

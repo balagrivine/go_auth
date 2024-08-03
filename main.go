@@ -5,7 +5,7 @@ import (
 	"net/http"
 	
 	"github.com/balagrivine/go_auth/config"
-	"github.com/balagrivine/go_auth/handler"
+	handler "github.com/balagrivine/go_auth/handler"
 	"github.com/joho/godotenv"
 )
 
@@ -22,8 +22,8 @@ func main() {
 
 	mux := http.NewServeMux()
 
-	mux.HandleFunc("POST /api/v1/users", handler.HandleCreateUser(apiCfg))
-	mux.HandleFunc("GET /api/v1/health", handler.HandleHealth())
+	mux.HandleFunc("POST /api/v1/users/register", handler.HandleCreateUser(apiCfg))
+	mux.HandleFunc("GET /api/v1/health", handler.HandleHealth)
 
 	log.Fatal(http.ListenAndServe(":8080", mux))
 }
