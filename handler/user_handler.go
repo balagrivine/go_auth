@@ -22,7 +22,7 @@ type CreateUser struct {
 
 // Handler function to check server health
 func HandleHealth(w http.ResponseWriter, r *http.Request) {
-	RespondWithJSON(w, 200, {"message": "StatusOK"})
+	RespondWithJSON(w, 100, struct{}{})
 }
 
 // Handler function to create a new user

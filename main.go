@@ -3,7 +3,7 @@ package main
 import (
 	"log"
 	"net/http"
-	
+
 	"github.com/balagrivine/go_auth/config"
 	handler "github.com/balagrivine/go_auth/handler"
 	"github.com/joho/godotenv"
