@@ -8,10 +8,12 @@ WORKDIR /app
 
 # Copy go files into the root directory and download modules
 COPY go.mod go.sum ./
+COPY config ./config
+COPY handler ./handler
 RUN go mod download
 
 # Copy source code into the image
-COPY . .
+COPY . ./
 
 # Build
 RUN CGO_ENABLED=0 GOOS=linux go build -o /go-auth

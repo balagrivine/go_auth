@@ -22,12 +22,20 @@ type CreateUser struct {
 
 // Handler function to check server health
 func HandleHealth(w http.ResponseWriter, r *http.Request) {
-	RespondWithJSON(w, 100, struct{}{})
+	fmt.Println("Will this code work")
+	type Response struct {
+		message string
+	}
+	resp := Response{
+		message: "StatusOK",
+	}
+	RespondWithJSON(w, 200, resp)
 }
 
 // Handler function to create a new user
 func HandleCreateUser(apiCfg *config.APIConfig) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
+		fmt.Println("Another test")
 		decoder := json.NewDecoder(r.Body)
 		var param CreateUser
 
@@ -44,6 +52,15 @@ func HandleCreateUser(apiCfg *config.APIConfig) http.HandlerFunc {
 		if err := validate.Struct(param); err != nil {
 			http.Error(w, fmt.Sprintf("Validation failed %s", err), http.StatusBadRequest)
 			return
+		}
+
+		// Check for duplicate user
+		err := CheckDuplicateUserByEmail(r.Context(), param.Email, apiCfg.DB)
+		if err != nil {
+			if err == ErrUserExists{
+				http.Error(w, "Email already registered", http.StatusConflict)
+			}
+			http.Error(w, fmt.Sprintf("Error while checking duplicate user: %s", err), http.StatusBadRequest)
 		}
 
 		pass, err := HashPassword(param.Password)

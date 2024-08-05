@@ -22,6 +22,7 @@ func main() {
 
 	mux := http.NewServeMux()
 
+	log.Println("Checking health")
 	mux.HandleFunc("GET /api/v1/health", handler.HandleHealth)
 	mux.HandleFunc("POST /api/v1/users/register", handler.HandleCreateUser(apiCfg))
 
