@@ -6,6 +6,8 @@ import (
 
 	"github.com/balagrivine/go_auth/internal/database"
 	_"github.com/lib/pq"
+
+
 )
 
 type APIConfig struct {
@@ -22,8 +24,6 @@ func InitConfig() (*APIConfig, error) {
 	if err != nil {
 		return nil, err
 	}
-
-	defer conn.Close()
 
 	if err = conn.Ping(); err != nil {
 		return nil, err

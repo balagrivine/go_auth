@@ -1,11 +1,18 @@
 package handler
 
 import (
-	"golang.org/x/crypto/bcrypt"
-	"github.com/balagrivine/go_auth/internal/database"
+	"time"
+	"os"
+	"fmt"
+	"errors"
 	"context"
 	"database/sql"
-	"errors"
+
+	"golang.org/x/crypto/bcrypt"
+	"github.com/dgrijalva/jwt-go"
+	"github.com/joho/godotenv"
+
+	"github.com/balagrivine/go_auth/internal/database"
 )
 
 var ErrUserExists error = errors.New("user with this email already exists")
@@ -32,4 +39,39 @@ func CheckDuplicateUserByEmail(ctx context.Context, email string, db *database.Q
 		return err
 	}
 	return ErrUserExists
+}
+
+func CheckPasswordHash(password string, hash string) bool {
+	err := bcrypt.CompareHashAndPassword([]byte(hash), []byte(password))
+	return err == nil
+}
+
+// Function to generate access tokens
+func createAccessToken(email string) (string, error) {
+	err := godotenv.Load(".env")
+	if err != nil {
+		return "", err
+	}
+
+	// Define token claims
+	claims := jwt.MapClaims{
+		"sub": email,
+		"exp": time.Now().Add(time.Hour * 72).Unix(),
+	}
+
+	// Create new JWT token with claims
+	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
+
+	secretKey := os.Getenv("SECRET_KEY")
+	if secretKey == "" {
+		return "", fmt.Errorf("SECRET_KEY is not set in the environment variables")
+	}
+
+	// Sign the token with the secret key
+	tokenString, err := token.SignedString([]byte(secretKey))
+	if err != nil {
+		return "", err
+	}
+
+	return tokenString, nil
 }
